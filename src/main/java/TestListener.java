@@ -57,16 +57,7 @@ public class TestListener implements ITestListener {
     }
 
     private void printTestComment(ITestResult result){
-        Class myClass = result.getTestClass().getRealClass();
-        Method method = null; //
-        try {
-            String methodName = result.getMethod().getMethodName();
-            method = myClass.getMethod(methodName); // спрашиваем Java: "Как называется, метод внутри которого
-            // ты сейчас выполняешь этот кусочек кода". Проще говоря - "Где я выполнился?"
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-
+        Method method = result.getMethod().getConstructorOrMethod().getMethod();
         TestComment testCommentAnnotation = method.getAnnotation(TestComment.class);
         System.out.println("ANNOTATION: " + testCommentAnnotation);
         System.out.println("Test Case Comment: " + testCommentAnnotation.commentText());
